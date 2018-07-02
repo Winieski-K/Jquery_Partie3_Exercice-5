@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <title>JQuery - Exercice 5</title>
+</head>
+<body>
+  <form>
+    <div id="block"></div>
+    <label for="text">champ de saisi : </label><input type="text" name="text" id="text" />
+  </form>
+  <script src="assets/js/jquery-3.2.1.js"></script>
+  <script>
+  // Initialise la fonction lorsque l'input ayant l'id text a le focus
+  $('#text').keydown(function(event) {
+    // Création de variables récupérant la taille et la largeur du viewport (navigateur)
+    var windowHeight = $(window).height();
+    var windowWidth = $(window).width();
+    // Creation de variables récupérant la taille et la largeur de l'élément (carré)
+    var elementHeight = $('#block').height();
+    var elementWidth = $('#block').width();
+    /* Création de variables récupérant la marge gauche (margin-left)
+    et la marge haute (padding-top) de l'élément (carré) */
+    var marginLeft = parseInt($('#block').css('margin-left'));
+    var marginTop = parseInt($('#block').css('margin-top'));
+    // Switch permettant de traiter chaque action (une action = un input précis)
+    switch (event.which) {
+      // Si l'utilisateur appuie sur la touche directionnelle gauche
+      case 37:
+      // Décrémente la marge gauche (margin-left) de 10px
+      marginLeft -= 10;
+      // Si la marge gauche (margin-left) est inférieure ou égale à 0
+      if(marginLeft <= 0) {
+        /* Attribue une nouvelle valeur à la variable marginLeft correspondant au côté opposé de l'écran.
+        Cette valeur correspond à la largeur du viewport moins la largeur de l'élément (carré) */
+        marginLeft = windowWidth - elementWidth;
+      }
+      // Attribue la variable marginLeft comme nouvelle valeur de margin-left
+      $('#block').css('margin-left', marginLeft);
+      break;
+      // Si l'utilisateur appuie sur la touche directionnelle haut
+      case 38:
+      // Décrémente la marge haute (margin-top) de 10px
+      marginTop -= 10;
+      // Si la marge haute (margin-top) est inférieure ou égale à 0
+      if(marginTop <= 0) {
+        /* Attribue une nouvelle valeur à la variable marginTop correspondant au côté opposé de l'écran.
+        Cette valeur correspond à la hauteur du viewport moins la hauteur de l'élément (carré) */
+        marginTop = windowHeight - elementHeight;
+      }
+      // Attribue la variable marginTop comme nouvelle valeur de margin-top
+      break;
+      // Si l'utilisateur appuie sur la touche directionnelle droite
+      case 39:
+      // Incrémente la marge gauche (margin-left) de 10px
+      marginLeft += 10;
+      /* Si la largeur du viewport est inférieure
+      ou égale à la marge gauche plus la largeur de l'élément (carré) */
+      if (windowWidth <= marginLeft + elementWidth) {
+        // Attribue la valeur 0 à la variable marginLeft
+        marginLeft = 0;
+      }
+      // Attribue la variable marginLeft comme nouvelle valeur de margin-left
+      $('#block').css('margin-left', marginLeft);
+      break;
+      // Si l'utilisateur appuie sur la touche directionnelle bas
+      case 40:
+      // Incrémente la marge haute (margin-top) de 10px
+      marginTop += 10;
+      /* Si la hauteur du viewport est inférieure
+      ou égale à la marge haute plus la hauteur de l'élément (carré) */
+      if (windowHeight <= marginTop + elementHeight) {
+        // Attribue la valeur 0 à la variable marginTop
+        marginTop = 0;
+      }
+      // Attribue la variable marginTop comme nouvelle valeur de margin-top
+      $('#block').css('margin-top', marginTop);
+      break;
+    }
+  });
+  </script>
+</body>
+</html>
